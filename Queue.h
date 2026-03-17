@@ -1,10 +1,10 @@
-
 #ifndef queue_h
 #define queue_h
 #include "Node.h"
+
 class Queue {
-	NodePtr headPtr,tailPtr;
-	int size;
+    NodePtr headPtr, tailPtr;
+    int size;
 public:
     void enqueue(int);
     int dequeue();
@@ -12,39 +12,48 @@ public:
     ~Queue();
 };
 
-
 void Queue::enqueue(int x){
-  NodePtr new_node= new NODE(x);
-if(new_node){ 
-    /* Add head and tail for me please */
-   1. connect & Change tail
-  2. (may be) change head  when the queue is empty
-  3. increase size */
-	
- }
+    NodePtr new_node = new NODE(x);
+    if(new_node != NULL){ 
+        if(size == 0) 
+            headPtr = new_node;
+        else 
+            tailPtr->set_next(new_node);
+
+        tailPtr = new_node;
+        size++;
+    }
+    else 
+        cout << "Out of memory." << endl;
 }
 
 int Queue::dequeue(){
-  if(size>0){
-    
-     /* Add head and tail for me please */
-          
-    
-  }
-  cout<<"Empty queue";
-  return -1;
-}
+    if(size > 0){
+        NodePtr t = headPtr;
+        headPtr = headPtr->get_next();
+        size--;
 
+        if(size == 0) 
+            tailPtr = NULL;
+
+        delete t;
+        return 1;
+    }
+    else{
+        cout << "Empty Queue" << endl;
+        return -1;
+    }
+}
 
 Queue::Queue(){
-    //initialize Queue
-    
-}
-Queue::~Queue(){
-      
-    //delete all remaning Queue (i.e. DQ all) 
-    
+    size = 0;
+    headPtr = NULL;
+    tailPtr = NULL;
 }
 
+Queue::~Queue(){
+    cout << "Dequeue all" << endl;
+    while(size > 0) dequeue();
+}
 
 #endif
